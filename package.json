@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Scaffold a wiki-kit project",
   "bin": {
-    "create-wiki-kit": "./index.js"
+    "create-wiki-kit": "index.js"
   },
   "files": [
     "index.js"
@@ -18,7 +18,10 @@
   "engines": {
     "node": ">=20"
   },
-  "repository": "haya-inc/create-wiki-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haya-inc/create-wiki-kit.git"
+  },
   "author": "haya-inc",
   "license": "MIT"
 }
