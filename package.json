@@ -1,0 +1,24 @@
+{
+  "name": "create-wiki-kit",
+  "version": "0.1.0",
+  "description": "Scaffold a wiki-kit project",
+  "bin": {
+    "create-wiki-kit": "./index.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "scaffold",
+    "template",
+    "wiki",
+    "knowledge-base",
+    "cli"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": "haya-inc/create-wiki-kit",
+  "author": "haya-inc",
+  "license": "MIT"
+}

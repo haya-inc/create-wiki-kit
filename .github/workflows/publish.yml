@@ -1,0 +1,42 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Verify release tag matches package version
+        run: |
+          package_version=$(node -p "require('./package.json').version")
+          release_tag="${GITHUB_REF_NAME#v}"
+
+          if [ "$release_tag" != "$package_version" ]; then
+            echo "Release tag ($GITHUB_REF_NAME) does not match package.json version ($package_version)." >&2
+            exit 1
+          fi
+
+      - name: Publish stable release
+        if: ${{ !github.event.release.prerelease }}
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish prerelease
+        if: ${{ github.event.release.prerelease }}
+        run: npm publish --tag next --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
