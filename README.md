@@ -45,15 +45,13 @@ node index.js release-wiki --template-path ../wiki-kit-template
 必要なら取得 ref も上書きできます。
 
 ```bash
-node index.js release-wiki --template-ref main
+node index.js release-wiki --template-ref 1cdd122825d8c931c0009af90bf46d629835d9e2
 ```
 
 ## テンプレート
 
 - リポジトリ: https://github.com/haya-inc/wiki-kit-template
-- デフォルト ref: `main`
-
-安定運用に入ったら、`create-discovery-kit` と同様に固定 commit ref へ切り替える想定です。
+- 固定 ref: `1cdd122825d8c931c0009af90bf46d629835d9e2`
 
 ## リリース
 

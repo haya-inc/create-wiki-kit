@@ -7,7 +7,8 @@ const { version } = require("./package.json");
 
 const TEMPLATE_REPO = "haya-inc/wiki-kit-template";
 const TEMPLATE_URL = `https://github.com/${TEMPLATE_REPO}.git`;
-const DEFAULT_TEMPLATE_REF = process.env.WIKI_KIT_TEMPLATE_REF || "main";
+const DEFAULT_TEMPLATE_REF =
+  process.env.WIKI_KIT_TEMPLATE_REF || "1cdd122825d8c931c0009af90bf46d629835d9e2";
 const DEFAULT_PROJECT_NAME = "wiki-kit";
 
 function runGit(args, cwd) {
