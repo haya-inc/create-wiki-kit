@@ -1,6 +1,6 @@
 {
   "name": "create-wiki-kit",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scaffold a wiki-kit project",
   "bin": {
     "create-wiki-kit": "index.js"

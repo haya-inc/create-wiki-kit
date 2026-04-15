@@ -1,59 +1,101 @@
 # create-wiki-kit
 
-wiki-kit プロジェクトを作成する CLI です。
+CLI to scaffold a [wiki-kit](https://github.com/haya-inc/wiki-kit-template) project.
 
-## 前提条件
+## Quick Start
+
+```bash
+npx create-wiki-kit my-wiki
+cd my-wiki
+```
+
+This clones the wiki-kit template, applies the selected locale, and leaves a ready-to-use project.
+
+## Prerequisites
 
 - Node.js 20+
 - git
 
-## 使い方
+## Usage
 
 ```bash
-npm create wiki-kit
+npx create-wiki-kit [project-name] [options]
 ```
 
-または
+`project-name` defaults to `wiki-kit` if omitted. Use `.` to scaffold into the current directory.
 
 ```bash
-npx create-wiki-kit release-wiki
+# New directory
+npx create-wiki-kit my-wiki
+
+# Current directory
+mkdir my-wiki && cd my-wiki
+npx create-wiki-kit .
+
+# Existing directory (must contain only safe files)
+cd my-repo
+npx create-wiki-kit .
+
+# Japanese locale
+npx create-wiki-kit my-wiki --locale ja
 ```
 
-`project-name` には単一ディレクトリ名を指定します。`../release-wiki` や `nested/release-wiki` は使えません。
+If the target directory already exists, it must contain only safe files (`.git`, `.gitignore`, `LICENSE`, `README.md`, etc.). Any other files are treated as conflicts and the command exits with an error listing them.
 
-## 例
+## Options
+
+| Option | Description |
+|---|---|
+| `--locale <code>` | Language for all generated files. Default: `en` |
+| `--template-path <path>` | Copy from a local template directory instead of fetching from GitHub |
+| `--template-ref <ref>` | Git ref to fetch from the remote template repository |
+| `-h`, `--help` | Show help |
+| `-v`, `--version` | Show version |
+
+## Locales
+
+14 languages are supported. The `--locale` option determines the language of `CLAUDE.md`, templates, wiki scaffolding, and all README files.
+
+| Code | Language | Code | Language |
+|------|------------|------|------------|
+| `de` | German | `ko` | Korean |
+| `en` | English | `pt` | Portuguese |
+| `es` | Spanish | `ru` | Russian |
+| `fr` | French | `th` | Thai |
+| `id` | Indonesian | `tr` | Turkish |
+| `it` | Italian | `vi` | Vietnamese |
+| `ja` | Japanese | `zh` | Chinese |
+
+## What It Does
+
+1. Fetches the template from [wiki-kit-template](https://github.com/haya-inc/wiki-kit-template)
+2. Applies the selected locale (overwrites root files from `locales/<code>/`, then removes `locales/`)
+3. Removes git history and `.gitkeep` files
+
+## Local Development
+
+Test with a local clone of `wiki-kit-template` before pushing:
 
 ```bash
-npx create-wiki-kit release-wiki
-cd release-wiki
+node index.js my-wiki --template-path ../wiki-kit-template
 ```
 
-## 実行内容
-
-- `wiki-kit-template` からテンプレートを取得する
-- git 履歴を削除する
-- `.gitkeep` を削除する
-
-## ローカル開発
-
-`wiki-kit-template` をまだ push していない段階でも、ローカルの clone から動作確認できます。
+Override the fetch ref if needed:
 
 ```bash
-node index.js release-wiki --template-path ../wiki-kit-template
+node index.js my-wiki --template-ref <commit-sha>
 ```
 
-必要なら取得 ref も上書きできます。
+## Template
 
-```bash
-node index.js release-wiki --template-ref 1cdd122825d8c931c0009af90bf46d629835d9e2
-```
+- Repository: https://github.com/haya-inc/wiki-kit-template
+- Pinned ref: `9b73c2ba532da876690bf43af3c05f80b59c62d0`
 
-## テンプレート
+## Inspiration
 
-- リポジトリ: https://github.com/haya-inc/wiki-kit-template
-- 固定 ref: `1cdd122825d8c931c0009af90bf46d629835d9e2`
+wiki-kit is based on the [LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern by Andrej Karpathy — a design where an LLM incrementally builds and maintains a structured wiki from raw sources, rather than retrieving documents at query time.
 
-## リリース
+## Release
 
-- GitHub Release の tag は `package.json` の version と一致している必要があります。`v` プレフィックスは利用できます。
-- prerelease は npm の `next` dist-tag で公開され、stable release のみ `latest` に公開されます。
+- GitHub Release tags must match the version in `package.json`. A `v` prefix is allowed.
+- Prereleases are published under the `next` dist-tag on npm; only stable releases go to `latest`.
